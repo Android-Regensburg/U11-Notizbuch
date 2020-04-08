@@ -78,10 +78,28 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.On
 
     @Override
     public void onListItemSelected(int id) {
-        // TODO check if the second fragment (ContentFragment) is present. If not, start the
-        // second activity (ContentActivity) that servers as a wrapper for the ContentFragment
-        // in the "one fragment layout" (this is required because the Fragments are added via XML
-        // and therefore swapping them progammatically won't work)
+        ContentFragment cf =
+                (ContentFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_content);
+        if (cf != null) {
+            cf.viewContent(id);
+        } else {
+            Toast.makeText(this, "Content Fragment not there, switching!", Toast.LENGTH_SHORT).show();
+            // ContentFragment (Fragment B) is not in the layout (handset layout),
+            // so start ContentActivity (Activity B) and pass it the info about the selected item
+            Intent intent = new Intent(this, ContentActivity.class);
+            intent.putExtra(ContentFragment.ARG_ID, id);
+            startActivity(intent);
+            //cf = new ContentFragment();
+            //Bundle args = new Bundle();
+            //args.putInt(ContentFragment.ARG_ID, id);
+            //cf.setArguments(args);
+            //FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            // Replace whatever is in the fragment_container view with this fragment,
+            // and add the transaction to the back stack so the user can navigate back
+            //transaction.replace(R.id.fragment_list, cf);
+            //transaction.addToBackStack(null);
+            //transaction.commit();
+        }
     }
 
     @Override

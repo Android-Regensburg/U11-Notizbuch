@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import de.ur.mi.android.base.db.NoteDB;
 
@@ -34,7 +36,7 @@ public class ContentFragment extends Fragment implements View.OnClickListener {
      * Therefore, this Activity must implement the Interface, too.</b>
      */
     public interface OnListItemChangedListener {
-        public void onListItemChanged();
+        void onListItemChanged();
     }
 
     public final static String ARG_ID = "id";
@@ -107,7 +109,15 @@ public class ContentFragment extends Fragment implements View.OnClickListener {
         }
         mNote = null;
         emptyContentView();
-        // TODO Switch back to list fragment if we are in one fragment layout
+        // Switch back to list fragment if we are in one fragment layout
+        MyListFragment myListFragment =
+                (MyListFragment) getFragmentManager().findFragmentById(R.id.fragment_list);
+        if (myListFragment == null) {
+            Intent loadMainViewIntent = new Intent(getActivity(), MainActivity.class);
+            loadMainViewIntent.putExtra(MainActivity.INTENT_ITEM_SELECTED_NAME,
+                    MainActivity.INTENT_ITEM_SELECTED_ID);
+            startActivity(loadMainViewIntent);
+        }
     }
 
     private void emptyContentView() {
@@ -181,12 +191,14 @@ public class ContentFragment extends Fragment implements View.OnClickListener {
                             .setStyle(new Notification.BigTextStyle().bigText(text)).setAutoCancel(true);
         }
 
-        // TODO set visibility to VISIBILITY_SECRET if we are on Lollipop or higher
         // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent(getActivity(), MainActivity.class);
         resultIntent
                 .putExtra(MainActivity.INTENT_ITEM_SELECTED_NAME, MainActivity.INTENT_ITEM_SELECTED_ID);
         resultIntent.putExtra(ContentFragment.ARG_ID, mNote.getId());
+
+        //
+        mBuilder.setVisibility(Notification.VISIBILITY_SECRET);
 
         // The stack builder object will contain an artificial back stack for the started Activity.
         // This ensures that navigating backward from the Activity leads out of your application to
@@ -238,19 +250,21 @@ public class ContentFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    @SuppressWarnings("deprecation")
-    // The new method onAttach(Context context) doesn't exist in API level 22 and below
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
         mNote = new Note();
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
-        try {
-            mCallback = (OnListItemChangedListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(
-                    activity.toString() + " must implement OnListItemChangedListener!");
+        Activity activity;
+        if (context instanceof Activity) {
+            activity = (Activity) context;
+            try {
+                mCallback = (OnListItemChangedListener) activity;
+            } catch (ClassCastException e) {
+                throw new ClassCastException(
+                        activity.toString() + " must implement OnListItemChangedListener!");
+            }
         }
     }
 }

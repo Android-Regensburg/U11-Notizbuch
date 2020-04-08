@@ -1,8 +1,10 @@
 package de.ur.mi.android.base;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ContentActivity extends AppCompatActivity implements ContentFragment.OnListItemChangedListener {
@@ -14,10 +16,25 @@ public class ContentActivity extends AppCompatActivity implements ContentFragmen
         if (getActionBar() != null) {
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
-        // TODO Use the ContentFragment in order to show the article or load an empty
-        // view (dummy id is -1) when a new note should be created
-
+        // Get note id from Intent
+        Intent intent = getIntent();
+        if (intent != null) {
+            ContentFragment cf = (ContentFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.fragment_content);
+            // Last argument is the default value, used here to indicate a missing id
+            int id = intent.getIntExtra(ContentFragment.ARG_ID, -1);
+            if (cf != null) {
+                if (id != -1) {
+                    cf.viewContent(id);
+                } else {
+                    cf.loadEmptyView();
+                }
+            } else {
+                Toast.makeText(this, "Content Fragment not there!", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(this, "Create your new note here!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

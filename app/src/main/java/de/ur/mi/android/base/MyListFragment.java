@@ -86,14 +86,14 @@ public class MyListFragment extends ListFragment {
         super.onAttach(context);
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
-        Activity a;
+        Activity activity;
         if (context instanceof Activity) {
-            a = (Activity) context;
+            activity = (Activity) context;
             try {
-                mCallback = (OnListItemSelectedListener) a;
+                mCallback = (OnListItemSelectedListener) activity;
             } catch (ClassCastException e) {
                 throw new ClassCastException(
-                        a.toString() + " must implement OnListItemSelectedListener!");
+                        activity.toString() + " must implement OnListItemSelectedListener!");
             }
         }
     }
