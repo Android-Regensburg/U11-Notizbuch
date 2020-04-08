@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+   <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      style="?android:buttonBarStyle"
+      android:orientation="horizontal">
+
+      <Button
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         style="?android:attr/buttonBarButtonStyle"
+         android:text="@string/button_updateNote"
+         android:layout_weight="1"
+         android:id="@+id/button_updateNote"/>
+
+      <Button
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         style="?android:attr/buttonBarButtonStyle"
+         android:text="@string/button_removeNote"
+         android:layout_weight="1"
+         android:id="@+id/button_removeNote"/>
+
+   </LinearLayout>
+
+   <EditText
+      android:hint="@string/hint_content_title"
+      android:id="@+id/content_title"
+      android:singleLine="true"
+      android:inputType="text|textCapSentences|textAutoComplete|textAutoCorrect"
+      android:textAppearance="?android:attr/textAppearanceLarge"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"/>
+
+   <TextView
+      android:text=""
+      android:id="@+id/content_date"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"/>
+
+   <Space
+      android:layout_width="match_parent"
+      android:layout_height="15dp"
+      />
+
+   <EditText
+      android:hint="@string/hint_content_text"
+      android:id="@+id/content_text"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:inputType="text|textMultiLine|textCapSentences|textAutoComplete|textAutoCorrect"/>
+
+</LinearLayout>
