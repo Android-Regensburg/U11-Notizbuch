@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Notizbuch</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_content">ContentActivity</string>
+    <string name="button_removeNote">Remove note</string>
+    <string name="button_updateNote">Create/Update note</string>
+    <string name="fab_addNote">Add note</string>
+    <string name="hint_content_text">Enter your note here…</string>
+    <string name="hint_content_title">Enter the title of your note…</string>
+    <string name="text_noNotes">No notes there</string>
+</resources>
