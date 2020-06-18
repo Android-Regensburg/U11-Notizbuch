@@ -1,9 +1,28 @@
+---
+title: Notizbuch
+author: Zuletzt bearbeitet von Lukas Schauhuber
+documentclass: scrartcl
+classoption:
+  - a4paper
+header-includes: |
+    \usepackage{german} 
+    \usepackage[a4paper,left=2.5cm, right=2.5cm,top=2.5cm, bottom=3cm]{geometry}
+    \usepackage{fancyhdr}
+    \PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
+    \pagestyle{fancy}
+    \fancyhf{}
+    \rhead{Mobile Apps für Android}
+    \lhead{Übungsaufgaben}
+    \cfoot{\includegraphics[height=2cm]{docs/footer.png}}
+    \fancypagestyle{plain}{
+      \fancyhf{}
+      \rhead{Mobile Apps für Android}
+      \lhead{Übungsaufgaben}
+      \cfoot[C]{\includegraphics[height=2cm]{docs/footer.png}}}
+      
+---
+
 # U11 | Notizbuch
-
-## Downloads
-
-- [Download des Starterpakets](https://github.com/Android-Regensburg/U11-Notizbuch/archive/master.zip)
-- [Download des Lösungsvorschlag](https://github.com/Android-Regensburg/U11-Notizbuch/archive/solution.zip)
 
 ## Aufgabe
 
