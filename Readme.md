@@ -28,7 +28,7 @@ header-includes: |
 
 ## Aufgabe
 
-Das Ziel dieser Aufgabe ist die Implementierung einer App zur Erstellung und Anzeige von Notizen. Die Anwendung soll dabei so umgesetzt werden, dass sie auf Geräten mit hoher Displaybreie, wie zum Beispiel einem Tablet, ebenfalls gut funktioniert, indem die Notizliste und die Eingabemaske, je nach Auflösung, zusammen oder getrennt voneinander angezeigt werden. Die erstellten Notizen werden in einer lokalen Datenbank hinterlegt.
+Das Ziel dieser Aufgabe ist die Implementierung einer App zur Erstellung und Anzeige von Notizen. Die Anwendung soll dabei so umgesetzt werden, dass sie auf Geräten mit hoher Displaybreite, wie zum Beispiel einem Tablet, ebenfalls gut funktioniert, indem die Notizliste und die Eingabemaske, je nach Auflösung, zusammen oder getrennt voneinander angezeigt werden. Die erstellten Notizen werden in einer lokalen Datenbank hinterlegt.
 
 ## Hinweise
 
