@@ -64,7 +64,7 @@ Nachdem an dieser Stelle Notiz-Elemente hinzugefügt werden können, soll auch m
 ### Zusammensetzen des MainActivity Layouts
 Bei großen Displays soll das `ContentFragment` in der MainActivity angezeigt und bedient werden können. Das funktioniert analog zur bisherigen Lösung, nur arbeitet die MainActivity dann direkt mit einer Instanz des `ContentFragments`, anstatt den Umweg über die `ContentActivity` zu gehen. Dadurch dass Sie für beide das `OnSubmitInputListener`-Interface verwenden können, haben Sie den Großteil bereits gelöst. Sie müssen nur, je nachdem ob Ihre MainActivity aktuell ein `ContentFragment` hat, entscheiden mit welcher Klasse sie kommunizieren müssen.
 
-**Hinweis: ** Die bezogene Instanz des Fragments ist `null`, wenn das Fragment in der Activity gerade nicht existiert. Das ist immer dann der Fall, wenn z.B. eine Bedingung, wie in diesem Fall eine Mindestdisplaybreite von 600dp, nicht gegeben ist. Darum das richtige Layout zu wählen, kümmert sich das Android System. Diesen `null` Vergleich können Sie nutzen, um zu überprüfen, mit welcher Art von Display Sie gerade arbeiten
+**Hinweis:** Die bezogene Instanz des Fragments ist `null`, wenn das Fragment in der Activity gerade nicht existiert. Das ist immer dann der Fall, wenn z.B. eine Bedingung, wie in diesem Fall eine Mindestdisplaybreite von 600dp, nicht gegeben ist. Darum das richtige Layout zu wählen, kümmert sich das Android System. Diesen `null` Vergleich können Sie nutzen, um zu überprüfen, mit welcher Art von Display Sie gerade arbeiten
 
 
 ## Anhang
