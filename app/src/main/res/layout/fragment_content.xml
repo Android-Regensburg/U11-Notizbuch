@@ -1,58 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="10dp">
 
-   <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      style="?android:buttonBarStyle"
-      android:orientation="horizontal">
+    <TextView
+        android:text="@string/content_title"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="5dp" />
 
-      <Button
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         style="?android:attr/buttonBarButtonStyle"
-         android:text="@string/button_updateNote"
-         android:layout_weight="1"
-         android:id="@+id/button_updateNote"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
 
-      <Button
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         style="?android:attr/buttonBarButtonStyle"
-         android:text="@string/button_removeNote"
-         android:layout_weight="1"
-         android:id="@+id/button_removeNote"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:orientation="vertical">
 
-   </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_title"
+            android:layout_marginStart="10dp"
+            android:paddingTop="10dp"/>
 
-   <EditText
-      android:hint="@string/hint_content_title"
-      android:id="@+id/content_title"
-      android:singleLine="true"
-      android:inputType="text|textCapSentences|textAutoComplete|textAutoCorrect"
-      android:textAppearance="?android:attr/textAppearanceLarge"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"/>
+        <EditText
+            android:hint="@string/hint_content_title"
+            android:id="@+id/content_title"
+            android:singleLine="true"
+            android:inputType="text|textCapSentences|textAutoComplete|textAutoCorrect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:padding="10dp"
+            android:background="@drawable/rounded_input"
+            />
 
-   <TextView
-      android:text=""
-      android:id="@+id/content_date"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"/>
+        <TextView
+            android:text="@string/label_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"/>
 
-   <Space
-      android:layout_width="match_parent"
-      android:layout_height="15dp"
-      />
+        <EditText
+            android:hint="@string/hint_content_text"
+            android:id="@+id/content_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:padding="10dp"
+            android:background="@drawable/rounded_input"
+            android:inputType="text|textMultiLine|textCapSentences|textAutoComplete|textAutoCorrect"/>
 
-   <EditText
-      android:hint="@string/hint_content_text"
-      android:id="@+id/content_text"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:inputType="text|textMultiLine|textCapSentences|textAutoComplete|textAutoCorrect"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginVertical="10dp">
+
+        <Button
+            android:id="@+id/btn_create"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button"
+            android:text="@string/add_note"
+            android:textColor="@color/colorBackground"
+            android:layout_marginBottom="10dp"
+            />
+
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/delete_note"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/colorBackground"/>
+
+
+
+    </LinearLayout>
+
 
 </LinearLayout>

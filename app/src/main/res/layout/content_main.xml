@@ -1,13 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <fragment
         android:id="@+id/fragment_list"
-        android:name="de.ur.mi.android.base.MyListFragment"
-        android:layout_width="wrap_content"
+        android:name="de.ur.mi.android.notizbuch.fragments.NoteListFragment"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:layout="@layout/fragment_list"/>
+        tools:layout="@layout/fragment_list" />
+
 
 </RelativeLayout>
