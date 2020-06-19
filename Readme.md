@@ -24,7 +24,7 @@ header-includes: |
 
 # U11 | Notizbuch
 
-![Cover für die zehnte Übungsaufgabe](./docs/cover.png)
+![Cover für die elfte Übungsaufgabe](./docs/cover.png)
 
 ## Aufgabe
 
