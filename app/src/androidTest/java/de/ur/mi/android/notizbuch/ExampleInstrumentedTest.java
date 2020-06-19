@@ -1,4 +1,4 @@
-package de.ur.mi.android.base;
+package de.ur.mi.android.notizbuch;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("de.ur.mi.android.base", appContext.getPackageName());
+        assertEquals("de.ur.mi.android.notizbuch", appContext.getPackageName());
     }
 }
