@@ -53,20 +53,14 @@ public class MainActivity extends AppCompatActivity implements NoteQueryResultLi
 
     @Override
     public void onNoteCreated(Note note) {
-        noteDatabaseHelper.addNoteToDatabase(note);
-        noteListFragment.addNoteToList(note);
     }
 
     @Override
     public void onNoteUpdated(Note note) {
-        noteDatabaseHelper.updateNoteInDatabase(note);
-        noteListFragment.updateNoteInList(note);
     }
 
     @Override
     public void onNoteDeleted(Note note) {
-        noteDatabaseHelper.deleteNoteFromDatabase(note);
-        noteListFragment.deleteNoteInList(note);
     }
 
     @Override
