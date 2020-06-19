@@ -1,5 +1,5 @@
 ---
-title: Notibuch
+title: Notizbuch
 author: Zuletzt bearbeitet von Lukas Schauhuber
 documentclass: scrartcl
 classoption:
@@ -24,80 +24,49 @@ header-includes: |
 
 # U11 | Notizbuch
 
+![Cover für die zehnte Übungsaufgabe](./docs/cover.png)
+
 ## Aufgabe
 
-Implementieren Sie im Rahmen dieser Übung eine Anwendung, die als virtuelles Notizbuch dienen soll. Kern dieser Aufgabe ist es, mit der Vielfalt verschiedener Bildschirmeigenschaften umzugehen. Das UI ihres Notizbuches soll sich daher an die Displaybreite des Gerätes anpassen, das heißt die Kernelemente entweder in einer Zeile oder untereinander anzeigen.
-Nach Erstellung oder Aktualisierung einer Erinnerung soll eine Benachrichtigung ausgegeben werden, die nicht auf dem Sperrbildschirm angezeigt werden soll.
+Das Ziel dieser Aufgabe ist die Implementierung einer App zur Erstellung und Anzeige von Notizen. Die Anwendung soll dabei so umgesetzt werden, dass sie auf Geräten mit hoher Displaybreie, wie zum Beispiel einem Tablet, ebenfalls gut funktioniert, indem die Notizliste und die Eingabemaske, je nach Auflösung, zusammen oder getrennt voneinander angezeigt werden. Die erstellten Notizen werden in einer lokalen Datenbank hinterlegt.
 
 ## Hinweise
 
-* Erstellen Sie das Interface aus einer Liste der bisher angelegten Notizen und einer Ansicht zum Erstellen von Notizen.
+* Für die Umsetzung der dynamischen Anzeige werden Fragments verwendet, die Sie aus früheren Vorlesungen kennen. Ein Fragment ist für die Auflistung der Notizen zuständig, das andere stellt die Eingabeoberfläche für Notizen dar
+  * `Fragments`: https://developer.android.com/guide/components/fragments
+* Die erstellten Notizen müssen zwischen den beiden Activities übertragen werden. Damit dies über den Intent funktioniert, implementiert die `Note`-Klasse das `Parcelable`-Interface. Verwenden Sie die `startActivityForResult(...)`-Methode in Kombination mit `onActivityResult(...)` um einen Rückkanal zwischen Ihren Activities zu schaffen und die `finish()`-Methode um Ihren Activity `Back Stack` möglichst klein zu halten
+  * `Parcelable`: https://developer.android.com/reference/android/os/Parcelable
+  * `Activity Stack`: https://developer.android.com/guide/components/activities/tasks-and-back-stack
+* Erstellen Sie sich über den AVD-Manager ein passendes Tablet (z.B. Pixel C) um Ihre App, zusätzlich zum regulären Smartphone, auf einem größeren Bildschirm zu testen
 
-* Die Sichtbarkeit von Benachrichtigungen kann seit Android 5.0 mit `public Notification.Builder setVisibility (int visibility)` festgelegt werden. Als Parameter werden dabei VISIBILITY_PRIVATE, VISIBILITY_SECRET oder VISIBILITY_PUBLIC entgegen genommen.
-
-* Die Datenbank zur Speicherung der Notizen ist bereits implementiert und kann unverändert übernommen werden.
-
-* Über XML eingebundene Fragments können zur Laufzeit nicht programmatisch entfernt oder ausgetauscht werden. Eine Alternative wäre es diese programmatisch Einzufügen, allerdings soll dies vermieden werden, um die Trennung von View und Model beizubehalten. Als Lösung bietet sich das Einhüllen eines Fragments in einer eigenen Activity an. Im "breiten" Layout werden dann beide Fragments in eine Activity eingebunden, im schmalen sind diese auf zwei Activities aufgeteilt.
-
-* Mithilfe des <include/>-Tags können andere Layout-Dateien eingebunden werden. Die Attribute sind layout (dahinter ein Verweis auf die einzubindende Datei, z.B. @layout/content_main sowie die Höhe und Breite (android:layout_width und android:layout_height). Auch eine id kann vergeben werden.
-
-* Android Studio erlaubt es unterschiedliche Ressourcen-Dateien für verschiedene Fälle bereit zu stellen. Beim Anlegen selbiger ist mittels der Liste „availiable qualifiers“ die Auswahl eines oder mehrerer Qualifier und danach die Angabe von Werten möglich. Diese spezifizieren genauer, für welche Geräte bzw. Betriebssystemversion die Ressourcendatei gedacht ist. Daraufhin wird die neue Datei automatisch in dem passenden Ordner erstellt. Beispiel: Layout-Dateien, die ab einer Bildschirmbreite über 600dp verwendet werden sollten, werden im Order layout-w600dp abgespeichert.
-
-
+## Ausgangslage
+* Die für die Aufgabe benötigten Layouts der Activities und Fragments sind bereits vollständig implementiert
+* Die lokale Datenbank liegt in Form einer RoomDatabase vor. Über den `NoteDatabaseHelper` und das zugehörige `NoteQueryResultListener`-Interface können Sie Notizen abfragen, erstellen, aktualisieren und löschen
+* Notwendige Konstanten finden Sie in der `AppConfig`-Klasse
+* Alle benötigten Klassen sind bereits erstellt. Die Auflistung der Notizen durch das `NoteListFragment` funktioniert bereits. Ihre Aufgabe ist es, sich um die Eingabemaske zu kümmern. Diese soll bei einem regulären Smartphone in einer eigenen Activity angezeigt werden, bei einem Tablet steht sie dagegen neben der Notizliste. Die zugehörigen Klassen sind das `ContentFragment` und die `ContentActivity`.
 
 ## Vorgehen
+### Wechsel zwischen Activites
+Beginnen Sie damit, den `FloatingActionButton` in Ihrer `MainActivity` mit Funktionalität zu belegen. Wenn dieser betätigt wird, wollen Sie bei einem Smartphone in die `ContentActivity` übergehen. Dort soll später ein neues Objekt der Klasse `Note` erzeugt und wieder zurück an die `MainActivity` gegeben werden. Damit das funktioniert, ohne dass Sie über kreuz mit `startActivity` immer wieder neue Activites auf Ihren Stack stapeln um über Intents Daten zu übertragen, sollen Sie stattdessen die im Hinweis erwähnte Methode verwenden.
 
-### Anpassungen in den Activities
+### Fragments und Acivities verbinden
+Speichern Sie an den passenden Stellen eine Instanz Ihres `ContentFragments`. Mit Hilfe dieser Instanz können Sie aus Activities heraus auf Methoden des Fragments zugreifen. Anders herum sollte das `Fragment` ein Interface verwenden um mit der Activity zu kommunizieren. Dieses ist bereits erstellt, sie müssen Ihre Activities lediglich als Listener registrieren. Sie können sich dafür an der Implementierung des `NoteListFragments` orientieren.
 
-#### Einstiegspunkt in die App
+### ContentFragment
+Vervollständigen Sie die `ContentFragment`-Klasse, indem Sie zunächst Ihre Layout-Bausteine referenzieren. Belegen Sie die Buttons mit OnClickListenern und passenden Callback-Methoden. Die TextViews Ihres Fragments können Sie verwenden, um eine neue Note zu erstellen (den Zeitstempel müssen Sie selbst generieren). Diese neue Note sollen Sie über die Methoden des `OnInputSubmitListener`-Interfaces an die jeweiligen Observer übergeben.
 
-Die App kann entweder aus dem Launcher heraus oder über eine Benachrichtigung aufgerufen werden. Diese beiden Fälle müssen beim Start der App unterschieden werden, damit im Falle der Notification die zugehörige Notiz direkt angezeigt werden kann.
+### Note verarbeiten
+Sobald Ihre ContentActivity ein Note Objekt über die Callback-Methoden erhalten hat, ist die Eingabe abgeschlossen und die Activity kann entsprechend beendet werden. Nutzen Sie die `setResult`-Methode und übergeben Sie dieser einen Intent den Sie mit der Note befüllen, bevor Sie die Activity beenden. Geben Sie außerdem einen Schlüssel zurück, durch den die MainActivity ermitteln kann, was mit der Note passieren soll. Die entsprechenden Werte finden Sie in der `AppConfig`-Klasse. In der `MainActivity` können Sie die `onActivityResult`-Methode überschreiben um die Note und den Schlüssel auszulesen. Je nach Schlüssel wird diese dann zum Beispiel an das `NoteListFragment` weiter gegeben und in der Datenbank abgelegt
 
-1. Hierzu muss in der onCreate()-Methode der Activity der startende Intent abgerufen werden. Wurde die App aus einer Benachrichtigung heraus gestartet, trägt der verantwortliche Intent ein spezielles Extra mit sich. Über dieses Extra wird die Zusammengehörigkeit der Benachrichtigung und der App hergestellt. Existiert also ein Extra mit dem Schlüssel, der in INTENT_ITEM_SELECTED_NAME hinterlegt ist und dem Wert, der in INTENT_ITEM_SELECTED_ID liegt, so wurde die App aus einer ihrer eigenen Benachrichtigungen heraus aufgerufen.
+### Notiz aus der Liste auswählen
+Nachdem an dieser Stelle Notiz-Elemente hinzugefügt werden können, soll auch mit diesen interagiert werden. Die `onListItemSelected`-Methode übergibt das Notiz-Objekt, das hinter der angeklickten Position steckt. Dieses soll in das `ContentFragment` geladen werden, damit Inhalt und Titel angepasst und überschrieben oder die Notiz gelöscht werden kann. Nutzen Sie für den Austausch zwischen MainActivity und ContentActivity wieder einen Rückkanal, geben Sie hier allerdings das angeklickte Notiz-Objekt mit. Im `ContentFragment` können Sie dann, wenn bereits eine Notiz vorhanden ist, diese bearbeiten oder löschen, statt ein neues Objekt zu erzeugen. Passen Sie die Schriftzüge der Buttons entsprechend an, um den Dialog klarer zu gestaltet. Sie können auch Buttons ausblenden, falls diese nicht notwendig sind.
+
+### Zusammensetzen des MainActivity Layouts
+Bei großen Displays soll das ContentFragment in der MainActivity angezeigt und bedient werden können. Das funktioniert analog zur bisherigen Lösung, nur arbeitet die MainActivity dann direkt mit einer Instanz des `ContentFragments`, anstatt den Umweg über die `ContentActivity` zu gehen. Dadurch dass Sie für beide das `OnSubmitInputListener`-Interface verwenden können, haben Sie den Großteil bereits gelöst. Sie müssen nur, je nachdem ob Ihre MainActivity aktuell ein `ContentFragment` hat, entscheiden mit welcher Klasse sie kommunizieren müssen.
+
+**Hinweis: ** Die bezogene Instanz des Fragments ist `null`, wenn das Fragment in der Activity gerade nicht existiert. Das ist immer dann der Fall, wenn z.B. eine Bedingung, wie in diesem Fall eine Mindestdisplaybreite von 600dp, nicht gegeben ist. Darum kümmert sich das Android System. Diesen `null` Vergleich können Sie nutzen, um zu überprüfen, mit welcher Art von Display Sie gerade arbeiten
 
 
-2. Die ID der anzuzeigenden Notiz (Wert) liegt als weiteres Extra vor, dessen Schlüssel ARG_ID aus der Klasse ContentFragment entspricht.
-
-3. Um direkt in die Detailansicht zu springen und die ermittelte Notiz anzuzeigen, kann der OnListItemSelected-Listener der Notizliste explizit aufgerufen werden (und nicht wie sonst als Callback fungieren).
-
-#### Auf eine Listenauswahl reagieren
-
-Der OnListItemSelected-Listener ist eigentlich zum Abfangen von Nutzerinteraktionen da und wird auf der Notizliste angemeldet. Hierzu wurde die Activity mittels implements-Statement als Listener definiert. Infolgedessen ist die Callback-Methode onListItemSelected() in der Activity zu implementieren. Dafür ist zunächst zu prüfen, welche Layoutvariante auf dem Gerät geladen ist:
-
-a. Handelt es sich um ein „breites“ Gerät (mind. 600dp Breite), so werden die Notizliste und Detailansicht gleichzeitig nebeneinander angezeigt. Diese Tatsache können Sie dazu nutzen, mithilfe des FragmentManagers festzustellen, ob das entsprechende ContentFragment bereits geladen ist. Ist es geladen, kann die ausgewählte Notiz mittels der Methode viewContent() in ebenjenem Fragment sogleich angezeigt werden.
-
-b. Handelt es sich um das schmale, „ein-Fragment“ Layout, muss zu der Activity gewechselt werden, welche Notizen anzeigt. Diese ist eigenständig, enthält jedoch auch ein ContentFragment. Damit dieses Fragment die Notiz anzeigen kann, muss zuerst seine Elternactivity (ContentActivity) gestartet werden. Hierzu wird ein Intent erzeugt, der ContentActivity startet. Als Extra wird unter Zuhilfenahme des Schlüssels ContentFragment.ARG_ID die ID der Notiz mitgegeben.
-
-####  Notizen in der ContentActivity anzeigen
-
-* In onCreate() ist zuerst der Intent auszulesen und zu unterscheiden, ob eine bestehende Notiz angezeigt oder eine neue angelegt werden soll. Hierzu kann das zuvor eingeführte Extra mit dem Schlüssel ARG_ID verwendet werden. Ist es vorhanden und der Wert nicht gleich -1 (Dummy-Wert für „neue Notiz anlegen“), wird die so übergebene ID benutzt, um mittels viewContent() des ContentFragments die entsprechende Notiz zu laden. Andernfalls wird ein leeres Formular zum Anlegen einer neuen Notiz angezeigt (via loadEmptyView())
-
-### Anpassungen in den Fragments
-
-Im ContentFragment ist ebenfalls zu unterscheiden, welche Darstellung auf dem Gerät geladen ist, da hiervon Abläufe innerhalb des Fragments betroffen sind.
-
-1. Im ContentFragment ist in der Methode removeEntry() im Falle des schmalen Layouts (mit nur einem sichtbaren Fragment) zur Liste mit den Notizen zurückzuschalten. Die Liste ist als eigenes Fragment (MyListFragment) in der MainActivity eingebettet. Der FragmentManager hilft wiederum bei der Feststellung des Layouts. Gestartet wird die MainActivity dann mit dem Extra INTENT_ITEM_SELECTED_NAME (Selbstaufruf, nicht aus einer Benachrichtigung heraus; s.o.).
-
-2. Ebenfalls im ContentFragment ist in der Methode createNotification() die Sichtbarkeit der Benachrichtigung auf dem Sperrbildschirm zu verhindern (setVisibility(), s.o.). Dies ist aber erst ab Android 5.0 („Lollipop“) möglich. Im Falle einer älteren Android-Version kann diese Option nicht gewählt werden. Eine Fallunterscheidung abhängig von der installierten Version des Betriebssystems verhindert an dieser Stelle den Absturz der App.
-
-Die restliche Funktionalität ist bereits vorgegeben. Nach ein paar wenigen Anpassungen am Layout ist
-die Aufgabe fertig.
-
-### Anpassungen in den Layout-Dateien
-
-Je nachdem, ob die App auf einem breiten oder schmalen Gerät ausgeführt wird, unterscheiden sich Funktionalität (bzw. Nutzerführung) und Layout. Entweder werden das Listen- und das Notizfragment gleichzeitig und nebeneinander angezeigt, oder einzeln und bildschirm-füllend. Unabhängig davon, ob eine Notiz auf einem schmalen oder breiten Bildschirm angezeigt wird, wird jedoch in beiden Fällen das ContentFragment mit dem gleichen Layout verwendet. Es ist deshalb sinnvoll, auch nur eine maßgebliche Layoutdatei für dieses Fragment zu definieren (in diesem isolierten Beispiel werden zur Vereinfachung keine weiteren Anpassungen an die Displaygröße vorgenommen). Dieses soll dann, je nach Gerät, geladen oder ignoriert werden. Da Android Ressourcendateien nach Bedarf auf Basis der verwendeten Qualifier lädt, können die unterschiedlichen Varianten einfach in entsprechenden Layouts definiert werden. Welches zur Notizbuch Laufzeit geladen wird, entscheidet das System auf Basis der vergebenen Qualifier für diese Ressourcendateien.
-
-1. Da der einzige Unterschied zwischen den beiden Varianten die Anzeige des ContentFragment ist, wird ein Layout activity_main.xml für die MainActivity angelegt. In diesem befinden sich Angaben zum Theme und es wird ein FloatingActionButton zu Erstellung einer neuen Notiz definiert. Daneben wird mithilfe des <include />-Elements ein anderes Layout referenziert. Diesen Mechanismus nutzen wir zum Stellen der Weiche zwischen „schmalen“ und „breiten“ Geräten.
-
-2. Für das mittels <include /> eingebundene Layout content_main werden zwei verschiedene Dateien erstellt: Eine Layoutressource mit dem Namen content_main.xml, welche den Qualifier für eine Bildschirmmindestbreite von 600dp angibt (w600dp) und eine gleichnamige Datei ohne diese Auszeichnung. Bei der Erstellung der Datei via AndroidStudio kann dieser Qualifier ausgewählt werden. Wurzelelement derartiger Dateien ist ein Layoutelement (z.B. RelativeLayout).
-
-3. Entsprechend der Vorgabe enthält die Layoutdatei für breite Geräte (w600dp) zwei Fragmente:
-
-    a. Die Liste als <fragment android:name=“...MyListFragment“ .../>
-
-    b. ... und die Notizansicht als <fragment android:name=“...ContentFragment“ .../>
-
-4. Das Layout content_main ohne Einschränkung, das nur geladen wird, wenn das Gerät nicht die Eigenschaft w600dp erfüllt, enthält entsprechend nur das erste Listenfragment.
 
 ## Anhang
 ### Screenshots
