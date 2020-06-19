@@ -55,7 +55,7 @@ Speichern Sie an den passenden Stellen eine Instanz Ihres `ContentFragments`. Mi
 ### ContentFragment
 Vervollständigen Sie die `ContentFragment`-Klasse, indem Sie zunächst Ihre Layout-Bausteine referenzieren. Belegen Sie die Buttons mit OnClickListenern und passenden Callback-Methoden. Die TextViews Ihres Fragments können Sie verwenden, um eine neue Note zu erstellen (den Zeitstempel müssen Sie selbst generieren). Diese neue Notiz sollen Sie über die Methoden des `OnInputSubmitListener`-Interfaces an die jeweiligen Observer übergeben.
 
-### Note verarbeiten
+### Notiz verarbeiten
 Sobald Ihre `ContentActivity` ein `Note`-Objekt über die Callback-Methoden erhalten hat, ist die Eingabe abgeschlossen und die Activity kann entsprechend beendet werden. Nutzen Sie die `setResult`-Methode und übergeben Sie dieser einen Intent den Sie mit der Notiz befüllen, bevor Sie die Activity beenden. Geben Sie außerdem einen Schlüssel an, durch den die MainActivity ermitteln kann, was mit der Notiz passieren soll (add, update, delete). Die entsprechenden Werte finden Sie in der `AppConfig`-Klasse. In der `MainActivity` können Sie die `onActivityResult`-Methode überschreiben um die Notiz und den Schlüssel auszulesen. Je nach Schlüssel wird diese dann zum Beispiel an das `NoteListFragment` weiter gegeben und in der Datenbank abgelegt
 
 ### Notiz aus der Liste auswählen
