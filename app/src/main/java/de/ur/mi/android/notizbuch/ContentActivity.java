@@ -19,6 +19,15 @@ public class ContentActivity extends AppCompatActivity implements ContentFragmen
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initUI();
+        loadNoteExtra();
+    }
+
+    private void initUI() {
+        setContentView(R.layout.activity_content);
+        contentFragment = (ContentFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_content);
+    }
+    
+    private void loadNoteExtra() {
         Note note = getIntent().getParcelableExtra(AppConfig.NOTE_EXTRA_KEY);
         if (contentFragment != null) {
             if (note != null) {
@@ -27,11 +36,6 @@ public class ContentActivity extends AppCompatActivity implements ContentFragmen
                 contentFragment.loadEmptyView();
             }
         }
-    }
-
-    private void initUI() {
-        setContentView(R.layout.activity_content);
-        contentFragment = (ContentFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_content);
     }
 
     private void passInputResult(Note note, int responseCode) {
