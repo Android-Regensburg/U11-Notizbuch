@@ -13,6 +13,14 @@ import de.ur.mi.android.notizbuch.fragments.ContentFragment;
 
 public class ContentActivity extends AppCompatActivity implements ContentFragment.OnInputSubmitListener{
 
+    /*
+     TODO: Belegen Sie die Callback-Methoden des OnInputSubmitListener-Interface
+      indem Sie einen Intent mit der Note und einem responseCode befüllen, als Result setzen und die Activity beenden
+
+     TODO: Prüfen Sie im späteren Teil der Aufgabe, ob eine vorhandene Note mit dem Intent übergeben wurde.
+      Laden Sie diese dann entsprechend zum Start in die Eingabefelder des ContentFragments
+     */
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

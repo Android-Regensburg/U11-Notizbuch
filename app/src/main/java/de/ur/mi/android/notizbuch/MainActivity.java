@@ -38,7 +38,16 @@ public class MainActivity extends AppCompatActivity implements NoteQueryResultLi
     }
 
     private void initUI() {
+        // An dieser Stelle wird eine Instanz des NoteListFragments bezogen
+        /*
+         TODO: Beziehen und speichern Sie eine Instanz des ContentFragments.
+          Diese hat den Wert 'null' wenn das Fragment im Layout nicht geladen wurde, in diesem Fall müssen Sie die ContentActivity starten
+         */
         noteListFragment = (NoteListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_list);
+        /*
+         TODO: Belegen Sie den Button mit einem Listener. Starten Sie in der Callback-Methode
+           die ContentActivity für einen Rückgabewert, oder eine leere Eingabemaske im ContentFragment
+         */
         FloatingActionButton floatingActionButton = findViewById(R.id.fab);
     }
 
@@ -49,7 +58,19 @@ public class MainActivity extends AppCompatActivity implements NoteQueryResultLi
 
     @Override
     public void onListItemSelected(Note note) {
+        /*
+            In dieser Callback-Methode werden angeklickte Notizen übergeben
+
+            TODO: Laden Sie die übergebene Notiz in die Felder der Eingabemaske.
+             Sie müssen unterscheiden welche Layoutkonstellation vorliegt (ob das Fragment geladen wurde)
+         */
     }
+
+    /*
+        TODO: In den folgenden Callback-Methoden muss die erhaltene Notiz verarbeitet werden.
+         Diese muss mit den passenden Methoden über den NoteDatabaseHelper an die Datenbank
+         und das NoteListFragment übergeben werden
+     */
 
     @Override
     public void onNoteCreated(Note note) {

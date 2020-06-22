@@ -22,11 +22,17 @@ import de.ur.mi.android.notizbuch.note.Note;
 
 public class ContentFragment extends Fragment {
 
+    /*
+     TODO: Initialisieren Sie das UI und registrieren Sie die Activity, analog zum NoteListFragment, als Listener.
+      Belegen Sie den Create- und Delete-Button so, dass entweder eine Note erstellt,
+      oder die übergebene gelöscht wird (Übergabe müssen Sie implementieren).
+      Verwenden Sie je nach Fall die passenden Methoden des Interfaces
+     */
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_content, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_content, container, false);
     }
 
     public interface OnInputSubmitListener {
