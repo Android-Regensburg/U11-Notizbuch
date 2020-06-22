@@ -28,14 +28,18 @@ public class ContentFragment extends Fragment {
     private TextView txtTitle, txtContent;
     private Button btnCreate,
             btnDelete;
+    
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        initUI();
+        this.listener = (OnInputSubmitListener) context;
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_content, container, false);
-        initUI(view);
-        listener = (OnInputSubmitListener) getActivity();
-        return view;
+        return inflater.inflate(R.layout.fragment_content, container, false);
     }
 
     private void initUI(View view) {
