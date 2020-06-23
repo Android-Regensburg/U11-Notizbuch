@@ -1,5 +1,6 @@
 package de.ur.mi.android.notizbuch.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,14 +33,15 @@ public class ContentFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        initUI();
         this.listener = (OnInputSubmitListener) context;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_content, container, false);
+        View view = inflater.inflate(R.layout.fragment_content, container, false);
+        initUI(view);
+        return view;
     }
 
     private void initUI(View view) {
